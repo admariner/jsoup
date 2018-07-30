@@ -65,11 +65,11 @@ workflows:
   run-tests:
     jobs:
       - build:
-        filters:
-          branches:
-            ignore: master
+          filters:
+            branches:
+              ignore: master
 
-  deploy-artifacts:
+  publish-release:
     jobs:
       - deploy-artifacts:
           filters:
