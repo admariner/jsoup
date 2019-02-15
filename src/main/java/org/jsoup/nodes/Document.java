@@ -59,7 +59,18 @@ public class Document extends Element {
     public String location() {
      return location;
     }
-    
+
+    /**
+     Accessor to the document's {@code DocumentType} element.
+     @return {@code DocumentType}
+     */
+    public DocumentType docType() {
+        if (childNodeSize() > 0 && childNode(0) instanceof DocumentType) {
+            return (DocumentType) childNode(0);
+        }
+        return null;
+    }
+
     /**
      Accessor to the document's {@code head} element.
      @return {@code head}
