@@ -10,19 +10,16 @@ import org.jsoup.integration.servlets.FileServlet;
 import org.jsoup.integration.servlets.HelloServlet;
 import org.jsoup.integration.servlets.InterruptedServlet;
 import org.jsoup.integration.servlets.RedirectServlet;
-import org.jsoup.integration.servlets.SlowRider;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.Map;
 
@@ -425,39 +422,6 @@ public class ConnectTest {
 
         assertEquals("UTF-8", con.response().charset());
         assertEquals("OK", doc.title());
-    }
-
-    @Test
-    public void testBinaryThrowsExceptionWhenTypeIgnored() {
-        Connection con = Jsoup.connect(FileServlet.urlTo("/htmltests/thumb.jpg"));
-        con.data(FileServlet.ContentTypeParam, "image/jpeg");
-        con.ignoreContentType(true);
-
-        boolean threw = false;
-        try {
-            con.execute();
-            Document doc = con.response().parse();
-        } catch (IOException e) {
-            threw = true;
-            assertEquals("Input is binary and unsupported", e.getMessage());
-        }
-        assertTrue(threw);
-    }
-
-    @Test
-    public void testBinaryResultThrows() {
-        Connection con = Jsoup.connect(FileServlet.urlTo("/htmltests/thumb.jpg"));
-        con.data(FileServlet.ContentTypeParam, "text/html");
-
-        boolean threw = false;
-        try {
-            con.execute();
-            Document doc = con.response().parse();
-        } catch (IOException e) {
-            threw = true;
-            assertEquals("Input is binary and unsupported", e.getMessage());
-        }
-        assertTrue(threw);
     }
 
     @Test
