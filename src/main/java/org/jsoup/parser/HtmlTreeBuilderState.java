@@ -140,6 +140,16 @@ enum HtmlTreeBuilderState {
                     } else if (name.equals("head")) {
                         tb.error(this);
                         return false;
+                    } else if (name.equals("iframe")) {
+                        // be more lenient than true W3C because bunch of trackers may add iframein head
+                        // which will break the title/meta extraction whereas it works on browsers
+                        tb.error(this);
+                        tb.insert(new Token.Character().data(t.toString()));
+                        return true;
+                    } else if (name.equals("input")) {
+                        tb.error(this);
+                        tb.insertEmpty(start);
+                        return true;
                     } else {
                         return anythingElse(t, tb);
                     }
@@ -164,6 +174,12 @@ enum HtmlTreeBuilderState {
         }
 
         private boolean anythingElse(Token t, TreeBuilder tb) {
+
+
+
+
+
+
             tb.processEndTag("head");
             return tb.process(t);
         }
